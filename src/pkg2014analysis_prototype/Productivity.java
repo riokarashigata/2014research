@@ -10,13 +10,15 @@
 /******************************************************/
 package pkg2014analysis_prototype;
 
+import DataFlow.DataSet;
+
 /**
  *
  * @author kaori
  */
 public class Productivity {
     // Method
-    static double[][] Main(String LOC, String MIN, String[] Condition)
+    static DataSet Main(String LOC, String MIN, String[] Condition)
     {
         return Calculate.DivideAbyB(DBBlock.getValue("PROJECTID","ACTLOC", Condition),"y", Calculate.DivideByDigit(DBBlock.getValue("PROJECTID","ACTMIN", Condition),"y",60.0),"y");
     }

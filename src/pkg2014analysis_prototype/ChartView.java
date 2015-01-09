@@ -9,6 +9,7 @@
 /*        Return: */
 /******************************************************/
 package pkg2014analysis_prototype;
+import DataFlow.DataSet;
 
 /**
  *
@@ -17,7 +18,7 @@ package pkg2014analysis_prototype;
 public class ChartView {
     // Method
     /* 共通の型 DataSet 型のデータを受け取り、それを HighChart などを利用してグラフ化し、出力する。*/
-    static void Main(double[][] Data, String ChartStile)/* ●Dataはdouble[][]型ではなく、共通の型 DataSet にする。 */
+    static void Main(DataSet Data, String ChartStile)/* ●Dataはdouble[][]型ではなく、共通の型 DataSet にする。 */
     {
         
     }

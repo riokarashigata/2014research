@@ -9,6 +9,8 @@
 /*        Return: */
 /******************************************************/
 package pkg2014analysis_prototype;
+import DataFlow.DataSet;
+import java.sql.ResultSet;
 
 /**
  *
@@ -18,23 +20,23 @@ public class DBBlock {
     
     // Method
     /* DB から取ってきた値を DataSet 型（共通の型）に入れて返す */
-    static double[][] getValue(String FieldNameX, String FieldNameY, String[] Condition)
+    static DataSet getValue(String FieldNameX, String FieldNameY, String[] Condition)
     {
-        double[][] DBBlock = new double[9][2];
+        DataSet DBBlock = new DataSet(FieldNameX, FieldNameY);
         return DBBlock;
     }
     
     // Method
     /* DB から目的のテーブルを取ってくる。 */
-    static double[][] getTable(String FieldName, String[] Condition)
+    static ResultSet getTable(String FieldName, String[] Condition)
     {
-        double[][] DBBlock = new double[9][2];
-        return DBBlock;
+        ResultSet Table = null;/* ●とりあえず null．後程修正。 */
+        return Table;
     }
     
     // Method
     /* SQL 文を生成する */
-    static String createSQL(String FieldName, String[] Condition)
+    static String createSQL(String FieldName, String[] Condition)/* ●条件（Condition) の型は、まだ未定。 */
     {
         String SELECT = "SELECT PSPASSGTDATA." + FieldName;
         String FROM = " FROM PSPASSGTDATA, USERS";
@@ -47,7 +49,7 @@ public class DBBlock {
     
     // Method
     /* SQL 文のWHEREへの追加。条件リストCondition の中身を AND でつなげて一つの String にして返す */
-    static String joinWhere(String[] Condition)
+    static String joinWhere(String[] Condition)/* ●条件(Condition)の型は、まだ未定。 */
     {
         String Where = "";
         for(int i = 0; i < Condition.length; i++)
