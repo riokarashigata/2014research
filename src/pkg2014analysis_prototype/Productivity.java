@@ -11,6 +11,7 @@
 package pkg2014analysis_prototype;
 
 import DataFlow.DataSet;
+import java.util.ArrayList;
 
 /**
  *
@@ -18,8 +19,8 @@ import DataFlow.DataSet;
  */
 public class Productivity {
     // Method
-    static DataSet Main(String LOC, String MIN, String[] Condition)
+    static DataSet Main(String LOC, String Block_ID_LOC, String MIN, String Block_ID_MIN, ArrayList[] Condition)
     {
-        return Calculate.DivideAbyB(DBBlock.getValue("PROJECTID","ACTLOC", Condition),"y", Calculate.DivideByDigit(DBBlock.getValue("PROJECTID","ACTMIN", Condition),"y",60.0),"y");
+        return Calculate.DivideAbyB(DBBlock.getValue("PROJECTID","ACTLOC", Condition,Block_ID_LOC),"y", Calculate.DivideByDigit(DBBlock.getValue("PROJECTID","ACTMIN", Condition,Block_ID_MIN),"y",60.0),"y");
     }
 }
