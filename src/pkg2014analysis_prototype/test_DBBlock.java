@@ -35,6 +35,7 @@ public class test_DBBlock
         ArrayList[] Block = DBBlock.getValue("PROJECTID", "ACTMIN", Condition, "1");
         System.out.println("A");
         
+        
     }
 }
 
