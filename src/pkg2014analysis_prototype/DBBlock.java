@@ -27,9 +27,11 @@ public class DBBlock {
     /* DB から取ってきた値を DataSet 型（共通の型）に入れて返す */
     public static DataSet getValue(String FieldNameX, String FieldNameY, ArrayList[] Condition, String Block_ID)
     {
-        ArrayList rs_X = getTable(FieldNameX, Condition, Block_ID);/* ●DataSet 型（共通の型）に変える */
-        ArrayList rs_Y = getTable(FieldNameY, Condition, Block_ID);/* ●DataSet 型（共通の型）に変える */
-        DataSet DBBlock = new DataSet(FieldNameX, FieldNameY);
+        DataSet DBBlock = new DataSet(FieldNameX,FieldNameY);/* DataSet */
+        
+        ArrayList Data_X = getTable(FieldNameX, Condition, Block_ID);/* ●DataSet 型（共通の型）に変える */
+        ArrayList Data_Y = getTable(FieldNameY, Condition, Block_ID);/* ●DataSet 型（共通の型）に変える */
+
         return DBBlock;
     }
     
