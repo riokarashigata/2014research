@@ -21,15 +21,16 @@ public class test_DBBlock
     public static void main (String[] args)
     {
         /* ユーザからの操作 */
-        String[] UsersInput1 = {"1","CLASS_ID=201301,ST_ID=1"};
-        String[] UsersInput2 = {"2","CLASS_ID=201301,ST_ID=1"};
+        String[] UsersInput1 = {"1","PSPASSGTDATA.CLASS_ID=201301,PSPASSGTDATA.ST_ID=1"};
+        String[] UsersInput2 = {"2","PSPASSGTDATA.CLASS_ID=201301,PSPASSGTDATA.ST_ID=1"};
         String[][] UsersInput = new String[2][2];/* ●条件リストの数は可変長にするか長さを取得する必要あり */
         UsersInput[0] = UsersInput1;
         UsersInput[1] = UsersInput2;
         System.out.println("OK Until here");
         
-        
         ArrayList[] Condition = Analysis.createCondition(UsersInput);
+        System.out.println("OK Until here");
+        
         ArrayList[] Block = DBBlock.getValue("PROJECTID", "ACTMIN", Condition, "1");
         System.out.println("A");
         

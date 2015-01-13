@@ -85,10 +85,13 @@ public class DBBlock {
             Statement stmt = con.createStatement();
             /* SQLの実行 */
             String sql = createSQL(FieldName, Condition, Block_ID);
+            System.out.println(sql);/* ●確認用 */
             ResultSet Table = stmt.executeQuery(sql);
             
+            if(Table.next());
             int STID = Table.getInt("ST_ID");/* ST_ID の確認用 */
-        
+            Table.previous();
+            
             /* 結果の表示 */
             /* 以下、クラスデータとして、個人ごとに記録（一番外のループ） */
             
@@ -136,7 +139,7 @@ public class DBBlock {
     /* SQL 文を生成する */
     private static String createSQL(String FieldName, ArrayList[] Condition, String Block_ID)
     {
-        String SELECT = "SELECT PSPASSGTDATA." + FieldName;
+        String SELECT = "SELECT PSPASSGTDATA.ST_ID, PSPASSGTDATA." + FieldName;
         String FROM = " FROM PSPASSGTDATA, USERS";
         String WHERE = " WHERE PSPASSGTDATA.ST_ID = USERS.ST_ID AND PSPASSGTDATA.CLASS_ID = USERS.CLASS_ID";
         WHERE = (WHERE + joinWhere(Condition, Block_ID));
