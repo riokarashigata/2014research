@@ -26,14 +26,11 @@ public class test_DBBlock
         String[][] UsersInput = new String[2][2];/* ●条件リストの数は可変長にするか長さを取得する必要あり */
         UsersInput[0] = UsersInput1;
         UsersInput[1] = UsersInput2;
-        System.out.println("OK Until here");
         
         ArrayList[] Condition = Analysis.createCondition(UsersInput);
-        System.out.println("OK Until here");
         
         /* getValue(String FieldNameX, String FieldNameY, ArrayList[] Condition, String Block_ID) */
         ArrayList[] Block = DBBlock.getValue("PROJECTID", "ACTMIN", Condition, "1");
-        System.out.println("A");
         for(int i = 0; i < Block.length; i++)
         {
             for(int j = 0; j < Block[i].size(); j++)
