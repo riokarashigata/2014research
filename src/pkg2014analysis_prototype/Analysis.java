@@ -22,7 +22,7 @@ public class Analysis {
     public static void main (String[] args) {
         String[][] UsersInput = new String[2][2];
         ArrayList[] Condition = createCondition(UsersInput);
-        ChartView.Main(Productivity.Main("ACTLOC", "1", "ACTMIN", "2", Condition),"Hyou");/* 加工プロセスを実行し、グラフを出力する。*/
+        //ChartView.Main(Productivity.Main("ACTLOC", "1", "ACTMIN", "2", Condition),"Hyou");/* 加工プロセスを実行し、グラフを出力する。*/
     }
  
     /* 条件を受け取って、条件リストを作る */

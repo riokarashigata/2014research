@@ -33,8 +33,10 @@ public class DBBlock {
         //ArrayList Data_Y = getTable(FieldNameY, Condition, Block_ID);/* ●DataSet 型（共通の型）に変える */
 
         ArrayList[] DBBlock = new ArrayList [2];
+        DBBlock[0] = new ArrayList();/* ●NullPointerException になるので。 */
         DBBlock[0].add(getTable(FieldNameX, Condition, Block_ID));
         System.out.println("DBBlock.java > getValue");/* ●確認用 */
+        DBBlock[1] = new ArrayList();/* ●NullPointerException になるので。 */
         DBBlock[1].add(getTable(FieldNameY, Condition, Block_ID));
         
         return DBBlock;
@@ -78,6 +80,7 @@ public class DBBlock {
         System.out.println("getTable");/* ●確認 */
         String DataType = checkDataType(Condition, Block_ID);/* 個人データかクラスデータかを調べる */
         ArrayList DataSet = new ArrayList();/* ●DataSet 後でちゃんとしたやつに変える*/
+        System.out.println("getTable2");/* ●確認 */
         try
         {
             /* データベースへの接続 */
@@ -102,16 +105,19 @@ public class DBBlock {
             
             while( Table.next())
             {
+                System.out.print(("getTable in the Big while"));/* ●確認用 */
                 if(flg == 0)
                 {
                     STID = Table.getInt("ST_ID");/* ST_ID の確認用 */
                     flg = 1;
                 }
+                System.out.println("getTable in the Big while flg=" + flg);/* ●確認用 */
                 /* "ST_ID"が同じ（＝同じ人のデータ）なら */
                 /* 個人データを記録していく */
                 double [] ProcessData = new double[9];/* ●ここをプロセスデータにする */
-                while(Table.getInt("ST_ID") == STID)
+                if(Table.getInt("ST_ID") == STID)
                 {
+                    System.out.println("getTable in the small while ST_ID=" + STID);/* ●確認用 */
                     /* 課題ごとの値を得る */
                     for(int i =1; i <= 8; i++)
                     {
@@ -126,10 +132,11 @@ public class DBBlock {
                         }
                     }
                 }
+                System.out.println("After th Big while loop");/* ●確認用 */
                 /* ● DataSet に ProcessData を格納する。 */
                 DataSet.add(ProcessData);
                 STID = Table.getInt("ST_ID");/* "ST_ID"を更新する */
-                Table.previous();/* 1つ戻る（.next() の逆）*/
+                //●Table.previous();/* 1つ戻る（.next() の逆）*/
             }
             
             /* 後片付け */
@@ -140,6 +147,8 @@ public class DBBlock {
         } catch ( SQLException e){
             e.printStackTrace();
         }
+        
+        System.out.println("getTable before return");/* ●確認用 */
        
         //ResultSet Table = null;/* ●とりあえず null．後程修正。 */
         return DataSet;

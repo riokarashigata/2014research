@@ -34,7 +34,14 @@ public class test_DBBlock
         /* getValue(String FieldNameX, String FieldNameY, ArrayList[] Condition, String Block_ID) */
         ArrayList[] Block = DBBlock.getValue("PROJECTID", "ACTMIN", Condition, "1");
         System.out.println("A");
-        
+        for(int i = 0; i < Block.length; i++)
+        {
+            for(int j = 0; j < Block[i].size(); j++)
+            {
+                System.out.print("\t" + Block[i].get(j));
+            }
+            System.out.println();
+        }
         
     }
 }
