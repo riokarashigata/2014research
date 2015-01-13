@@ -34,6 +34,7 @@ public class DBBlock {
 
         ArrayList[] DBBlock = new ArrayList [2];
         DBBlock[0].add(getTable(FieldNameX, Condition, Block_ID));
+        System.out.println("DBBlock.java > getValue");/* ●確認用 */
         DBBlock[1].add(getTable(FieldNameY, Condition, Block_ID));
         
         return DBBlock;
@@ -74,6 +75,7 @@ public class DBBlock {
     /* 個人単位のプロセスデータ */
     private static ArrayList/*ResultSet*/ getTable(String FieldName, ArrayList[] Condition, String Block_ID)
     {
+        System.out.println("getTable");/* ●確認 */
         String DataType = checkDataType(Condition, Block_ID);/* 個人データかクラスデータかを調べる */
         ArrayList DataSet = new ArrayList();/* ●DataSet 後でちゃんとしたやつに変える*/
         try
@@ -88,15 +90,23 @@ public class DBBlock {
             System.out.println(sql);/* ●確認用 */
             ResultSet Table = stmt.executeQuery(sql);
             
-            if(Table.next());
-            int STID = Table.getInt("ST_ID");/* ST_ID の確認用 */
-            Table.previous();
+            
+            // Table.next();
+            //int STID = Table.getInt("ST_ID");/* ST_ID の確認用 */
+            //Table.previous();
+            int STID = 0;
+            int flg = 0;
             
             /* 結果の表示 */
             /* 以下、クラスデータとして、個人ごとに記録（一番外のループ） */
             
             while( Table.next())
             {
+                if(flg == 0)
+                {
+                    STID = Table.getInt("ST_ID");/* ST_ID の確認用 */
+                    flg = 1;
+                }
                 /* "ST_ID"が同じ（＝同じ人のデータ）なら */
                 /* 個人データを記録していく */
                 double [] ProcessData = new double[9];/* ●ここをプロセスデータにする */
@@ -105,7 +115,7 @@ public class DBBlock {
                     /* 課題ごとの値を得る */
                     for(int i =1; i <= 8; i++)
                     {
-                        String Program = Table.getString("PROGRAMASSGITMENT");
+                        String Program = Table.getString("PROGRAMASSIGNMENT");
                         if( Integer.parseInt(Program.substring(Program.length()-1)) == i)
                         {
                             int DATA = Table.getInt(FieldName);
@@ -139,7 +149,7 @@ public class DBBlock {
     /* SQL 文を生成する */
     private static String createSQL(String FieldName, ArrayList[] Condition, String Block_ID)
     {
-        String SELECT = "SELECT PSPASSGTDATA.ST_ID, PSPASSGTDATA." + FieldName;
+        String SELECT = "SELECT PSPASSGTDATA.PROGRAMASSIGNMENT, PSPASSGTDATA.ST_ID, PSPASSGTDATA." + FieldName;
         String FROM = " FROM PSPASSGTDATA, USERS";
         String WHERE = " WHERE PSPASSGTDATA.ST_ID = USERS.ST_ID AND PSPASSGTDATA.CLASS_ID = USERS.CLASS_ID";
         WHERE = (WHERE + joinWhere(Condition, Block_ID));

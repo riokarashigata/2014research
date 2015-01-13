@@ -31,6 +31,7 @@ public class test_DBBlock
         ArrayList[] Condition = Analysis.createCondition(UsersInput);
         System.out.println("OK Until here");
         
+        /* getValue(String FieldNameX, String FieldNameY, ArrayList[] Condition, String Block_ID) */
         ArrayList[] Block = DBBlock.getValue("PROJECTID", "ACTMIN", Condition, "1");
         System.out.println("A");
         
