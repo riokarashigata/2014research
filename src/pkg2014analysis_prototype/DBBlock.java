@@ -34,9 +34,9 @@ public class DBBlock {
 
         ArrayList[] DBBlock = new ArrayList [2];/* x軸の値と y軸の値を格納する */
         DBBlock[0] = new ArrayList();/* ●NullPointerException になるので。 */
-        DBBlock[0].add(getTable(FieldNameX, Condition, Block_ID));
+        DBBlock[0].add(getTable(FieldNameX, Condition, Block_ID));/* x 軸のデータ */
         DBBlock[1] = new ArrayList();/* ●NullPointerException になるので。 */
-        DBBlock[1].add(getTable(FieldNameY, Condition, Block_ID));
+        DBBlock[1].add(getTable(FieldNameY, Condition, Block_ID));/* y 軸のデータ */
         System.out.println("DBBlock.java > getValue");/* ●確認用 */
          
         return DBBlock;
@@ -62,10 +62,6 @@ public class DBBlock {
             System.out.println(sql);/* ●確認用 */
             ResultSet Table = stmt.executeQuery(sql);
             
-            
-            // Table.next();
-            //int STID = Table.getInt("ST_ID");/* ST_ID の確認用 */
-            //Table.previous();
             int STID = 0;
             int flg = 0;
             
@@ -88,22 +84,17 @@ public class DBBlock {
                     for(int i =1; i <= 8; i++)
                     {
                         String Program = Table.getString("PROGRAMASSIGNMENT");
-                        if( Integer.parseInt(Program.substring(Program.length()-1)) == i)
+                        if( Integer.parseInt(Program.substring(Program.length()-1)) == i)/* 課題番号が i と同じなら */
                         {
-                            int DATA = Table.getInt(FieldName);
-                            if(DATA != 0)
+                            int DATA = Table.getInt(FieldName);/* 値を取ってくる */
+                            if(DATA != 0)/* 値が 0 でなければ */
                             {
-                                ProcessData[i] = DATA;
+                                ProcessData[i] = DATA;/* 値を格納する */
                             }
                         }
                     }
                 }
-                /* ●確認用 */
-                for(int i = 0; i < ProcessData.length; i++)
-                {
-                    System.out.println("ProcessData [" + i + "] = " + ProcessData[i]);
-                }
-                
+                                
                 /* ● DataSet に ProcessData を格納する。 */
                 DataSet.add(ProcessData);
                 STID = Table.getInt("ST_ID");/* "ST_ID"を更新する */
@@ -118,6 +109,19 @@ public class DBBlock {
         } catch ( SQLException e){
             e.printStackTrace();
         }
+        
+        System.out.println(((double[])DataSet.get(0))[0]);/* ●確認用 */
+        
+        /* ●確認用 */
+        for(int i = 0; i < DataSet.size(); i++)
+        {
+            double[] ProcessData = (double[])DataSet.get(i);
+            for(int j = 0; j < ProcessData.length; j++)
+            {
+                System.out.println("ProcessData [" + i + "] = " + ProcessData[j]);
+            }
+        }
+        
         
         System.out.println("getTable before return");/* ●確認用 */
        
