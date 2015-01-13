@@ -41,7 +41,7 @@ public class Analysis {
         /* Block_ID ごとに処理を行う */
         for(int i = 0; i < UsersInput.length; i++)
         {
-            /* Block_ID ごとの条件リスト（カンマ区切りの一つの文字列）をplitメソッドで分割する */
+            /* Block_ID ごとの条件リスト（カンマ区切りの一つの文字列）をsplitメソッドで分割する */
             String[] ConditionList = UsersInput[i][1].split(",");
             
             Condition[i] = new ArrayList();/* Block_ID ごとに ArrayList をつくる＝BLock_IDごとに可変長！ */
