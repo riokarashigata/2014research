@@ -21,15 +21,16 @@ public class test_DBBlock
     public static void main (String[] args)
     {
         /* ユーザからの操作 */
+        /* ●仮。どこかでまとめて受け取る。 */
         String[] UsersInput1 = {"1","PSPASSGTDATA.CLASS_ID=201301,PSPASSGTDATA.ST_ID=1"};
         String[] UsersInput2 = {"2","PSPASSGTDATA.CLASS_ID=201301,PSPASSGTDATA.ST_ID=1"};
         String[][] UsersInput = new String[2][2];/* ●条件リストの数は可変長にするか長さを取得する必要あり */
         UsersInput[0] = UsersInput1;
         UsersInput[1] = UsersInput2;
         
-        ArrayList[] Condition = Analysis.createCondition(UsersInput);
+        ArrayList[] Condition = Analysis.createCondition(UsersInput);/* 実際には Analysis.java で行う。 */
         
-        /* getValue(String FieldNameX, String FieldNameY, ArrayList[] Condition, String Block_ID) */
+        /* 解説：getValue(String FieldNameX, String FieldNameY, ArrayList[] Condition, String Block_ID) */
         ArrayList[] Block = DBBlock.getValue("PROJECTID", "ACTMIN", Condition, "1");
         for(int i = 0; i < Block.length; i++)
         {
