@@ -32,13 +32,13 @@ public class DBBlock {
         //ArrayList Data_X = getTable(FieldNameX, Condition, Block_ID);/* ●DataSet 型（共通の型）に変える */
         //ArrayList Data_Y = getTable(FieldNameY, Condition, Block_ID);/* ●DataSet 型（共通の型）に変える */
 
-        ArrayList[] DBBlock = new ArrayList [2];
+        ArrayList[] DBBlock = new ArrayList [2];/* x軸の値と y軸の値を格納する */
         DBBlock[0] = new ArrayList();/* ●NullPointerException になるので。 */
         DBBlock[0].add(getTable(FieldNameX, Condition, Block_ID));
-        System.out.println("DBBlock.java > getValue");/* ●確認用 */
         DBBlock[1] = new ArrayList();/* ●NullPointerException になるので。 */
         DBBlock[1].add(getTable(FieldNameY, Condition, Block_ID));
-        
+        System.out.println("DBBlock.java > getValue");/* ●確認用 */
+         
         return DBBlock;
     }
        
@@ -98,6 +98,12 @@ public class DBBlock {
                         }
                     }
                 }
+                /* ●確認用 */
+                for(int i = 0; i < ProcessData.length; i++)
+                {
+                    System.out.println("ProcessData [" + i + "] = " + ProcessData[i]);
+                }
+                
                 /* ● DataSet に ProcessData を格納する。 */
                 DataSet.add(ProcessData);
                 STID = Table.getInt("ST_ID");/* "ST_ID"を更新する */
