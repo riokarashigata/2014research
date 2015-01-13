@@ -26,7 +26,7 @@ public class test_DBBlock
         String[][] UsersInput = new String[2][2];/* ●条件リストの数は可変長にするか長さを取得する必要あり */
         UsersInput[0] = UsersInput1;
         UsersInput[1] = UsersInput2;
-        
+        System.out.println("OK Until here");
         
         
         ArrayList[] Condition = Analysis.createCondition(UsersInput);

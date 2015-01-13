@@ -151,10 +151,9 @@ public class DBBlock {
     {
         int B_ID = Integer.parseInt(Block_ID);
         String Where = "";
-        /* リストの先頭には条件ではなく Block_ID が入っているので、i=0 ではなく i=1 からスタートする。 */
-        for(int i = 1; i < Condition[B_ID].size(); i++)
+        for(int i = 0; i < Condition[B_ID].size(); i++)
         {
-            Where = Where + Condition[B_ID].get(i);
+            Where = Where + " AND " + Condition[B_ID].get(i);
         }
         return Where;
     }
