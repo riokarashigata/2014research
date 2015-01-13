@@ -41,44 +41,13 @@ public class DBBlock {
         
         return DBBlock;
     }
-    
-    // Method
-    /* クラスデータなのか個人データなのかを調べる */
-    private static String checkDataType(ArrayList[] Condition, String Block_ID)
-    {
-        String DataType = null;
-        int BlockID = Integer.parseInt(Block_ID);
-        int count = 0;/* 条件リストの中の"ST_ID="で始まる条件の数を数える */
-        /* 特定のブロックについて、条件リストの中身を調べる */
-        for(int i = 0; i < Condition[BlockID].size(); i++)/* そのブロックの条件リストを全てみていく */
-        {
-            String Target = "ST_ID";
-            /* 条件リストの中に ST_ID "=" 一つの番号 */
-            if((Condition[BlockID].get(i).toString()).startsWith( "ST_ID="))
-            {
-                count++;/* 条件リストの中の"ST_ID="で始まる条件の数を数える */
-            }
-            /* "ST_ID="で始まる条件が 1 つなら、個人データ。
-            　0 又は 2以上の場合は、クラスデータの可能性。
-            */
-        }
-        if(count == 1)
-        {
-            DataType = "Pelsonal";/* 個人データが一つ */
-        }else{
-            DataType = "Class";/* 個人データが複数 */
-        }
-   
-        return DataType;
-    }
-    
+       
     // Method
     /* DB から目的のテーブルを取ってくる。 */
     /* 個人単位のプロセスデータ */
     private static ArrayList/*ResultSet*/ getTable(String FieldName, ArrayList[] Condition, String Block_ID)
     {
         System.out.println("getTable");/* ●確認 */
-        String DataType = checkDataType(Condition, Block_ID);/* 個人データかクラスデータかを調べる */
         ArrayList DataSet = new ArrayList();/* ●DataSet 後でちゃんとしたやつに変える*/
         System.out.println("getTable2");/* ●確認 */
         try
@@ -105,19 +74,16 @@ public class DBBlock {
             
             while( Table.next())
             {
-                System.out.print(("getTable in the Big while"));/* ●確認用 */
                 if(flg == 0)
                 {
                     STID = Table.getInt("ST_ID");/* ST_ID の確認用 */
                     flg = 1;
                 }
-                System.out.println("getTable in the Big while flg=" + flg);/* ●確認用 */
                 /* "ST_ID"が同じ（＝同じ人のデータ）なら */
                 /* 個人データを記録していく */
                 double [] ProcessData = new double[9];/* ●ここをプロセスデータにする */
                 if(Table.getInt("ST_ID") == STID)
                 {
-                    System.out.println("getTable in the small while ST_ID=" + STID);/* ●確認用 */
                     /* 課題ごとの値を得る */
                     for(int i =1; i <= 8; i++)
                     {
@@ -132,7 +98,6 @@ public class DBBlock {
                         }
                     }
                 }
-                System.out.println("After th Big while loop");/* ●確認用 */
                 /* ● DataSet に ProcessData を格納する。 */
                 DataSet.add(ProcessData);
                 STID = Table.getInt("ST_ID");/* "ST_ID"を更新する */
