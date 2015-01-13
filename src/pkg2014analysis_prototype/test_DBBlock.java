@@ -38,7 +38,7 @@ public class test_DBBlock
         {
             for(int j = 0; j < Block[i].size(); j++)
             {
-                System.out.print("\t" + Block[i].get(j));
+                System.out.print("\t" + Block[i].get(j));/* ●結果を確認 */
             }
             System.out.println();
         }
