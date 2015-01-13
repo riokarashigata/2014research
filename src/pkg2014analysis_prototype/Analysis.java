@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class Analysis {
     // Method
     /* 加工プロセスを実行する */
-    public static void main(String[] args) {
+    public static void main (String[] args) {
         String[][] UsersInput = new String[2][2];
         ArrayList[] Condition = createCondition(UsersInput);
         ChartView.Main(Productivity.Main("ACTLOC", "1", "ACTMIN", "2", Condition),"Hyou");/* 加工プロセスを実行し、グラフを出力する。*/
