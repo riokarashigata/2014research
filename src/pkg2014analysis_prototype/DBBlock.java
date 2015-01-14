@@ -37,13 +37,28 @@ public class DBBlock {
     }
     
     // 一人分のデータを確認する
-    public static void PrintOut(ArrayList<double[]> PersonalData)
+    public static void PrintOutPersonalData(ArrayList<double[]> PersonalData)
     {
         for(int i = 0; i < PersonalData.size(); i++)
         {
             for(int j = 0; j < PersonalData.get(i).length; j++)
             {
                 System.out.println(PersonalData.get(i)[j]);
+            }
+        }
+    }
+    
+    // 複数人のデータを確認する
+    public static void PrintOutData(ArrayList<ArrayList<double[]>> Data)
+    {
+        for(int i = 0; i < Data.size(); i++)
+        {
+            for(int j = 0; j < Data.get(i).size(); j++)
+            {
+                for(int k = 0; k < Data.get(i).get(j).length; k++)
+                {
+                    System.out.println(Data.get(i).get(j)[k]);   
+                }
             }
         }
     }
@@ -103,7 +118,6 @@ public class DBBlock {
             xyData[0] = temp[i][0];
             xyData[1] = temp[i][1];
             PersonalData.add(xyData);
-            //System.out.println(temp[i][1]);
         }
         
         return PersonalData;
