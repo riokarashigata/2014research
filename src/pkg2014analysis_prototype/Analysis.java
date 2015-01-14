@@ -23,8 +23,8 @@ public class Analysis {
         
         // 入力例
         // ●共通の型 ArrayList<ArrayList>
-        ArrayList<ArrayList> Block = new ArrayList();
-        
+        ArrayList<ArrayList<double[]>> Block = new ArrayList();
+        // XMLから変換
         Block = DBBlock("Xname", "Yname", "SELECT * from PSPASSGTDATA");
                 
         // 加工プロセスを実行
@@ -32,9 +32,9 @@ public class Analysis {
 
     }
     
-    public static ArrayList<ArrayList> DBBlock(String Xname, String Yname, String sql)
+    public static ArrayList<ArrayList<double[]>> DBBlock(String Xname, String Yname, String sql)
     {
-        ArrayList<ArrayList> Block = new ArrayList();
+        ArrayList<ArrayList<double[]>> Block = new ArrayList();
         return Block;
     }
             
