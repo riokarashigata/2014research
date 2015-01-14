@@ -22,9 +22,108 @@ import java.util.ArrayList;
  * @author kaori
  */
 public class DBBlock {
+    // DB からデータを取ってきて、共通の型に格納して返す
+    public static ArrayList<ArrayList<double[]>> getData(String Xname, String Yname, String sql)
+    {        
+        ArrayList<ArrayList<double[]>> Data = new ArrayList();
+
+        // 一人分のデータを取ってくる
+        ArrayList<double[]> PersonalData = getPersonalData(Xname, Yname, sql);
+        
+        // ArrayList<ArrayList> にまとめる。
+        Data.add(PersonalData);              
+        
+        return Data;
+    }
+    
+    // 一人分のデータを確認する
+    public static void PrintOut(ArrayList<double[]> PersonalData)
+    {
+        for(int i = 0; i < PersonalData.size(); i++)
+        {
+            for(int j = 0; j < PersonalData.get(i).length; j++)
+            {
+                System.out.println(PersonalData.get(i)[j]);
+            }
+        }
+    }
+            
+    // 一人分のデータを取ってくる
+    public static ArrayList<double[]> getPersonalData(String Xname, String Yname, String sql)
+    {
+        ArrayList<double[]> PersonalData = new ArrayList();
+        // xyデータを格納
+        double[][] temp = new double[8][2];
+        
+        try
+        {
+            // データベースへの接続
+            String driverUrl = "jdbc:derby://localhost:1527/PSP_for_E";
+            Connection con = DriverManager.getConnection(driverUrl, "root","root");
+            // SQLを実行するためのステートメントの作成
+            Statement stmt = con.createStatement();
+            // SQLの実行
+            ResultSet rs = stmt.executeQuery(sql);
+                      
+            // 結果の表示
+            while( rs.next() )
+            {
+                           
+                /* 課題ごとの値を得る */ 
+                for(int i = 1; i <= 8; i++)
+                {
+                    String Program = rs.getString("PROGRAMASSIGNMENT");
+                    if( Integer.parseInt(Program.substring(Program.length()-1)) == i )
+                    {
+                        int DATA = rs.getInt(Xname);
+                        if(DATA != 0 ){
+                            temp[i-1][0] = DATA; 
+                        }
+                        DATA = rs.getInt(Yname);
+                        if(DATA != 0 )
+                        {
+                            temp[i-1][1] = DATA;
+                        }
+                    }
+                }                
+            }
+
+            /* 後片付け */
+            rs.close();
+            stmt.close();
+            con.close();
+                                    
+        } catch ( SQLException e){
+            e.printStackTrace();
+        }
+        
+        for(int i = 0; i < 8; i++)
+        {
+            double[] xyData = new double[2];
+            xyData[0] = temp[i][0];
+            xyData[1] = temp[i][1];
+            PersonalData.add(xyData);
+            //System.out.println(temp[i][1]);
+        }
+        
+        return PersonalData;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     // Method
-    /* DB から取ってきた値を DataSet 型（共通の型）に入れて返す */
     public static /* DataSet*/ ArrayList[] getValue(String FieldNameX, String FieldNameY, ArrayList[] Condition, String Block_ID)
     {
         //DataSet DBBlock = new DataSet(FieldNameX,FieldNameY);/* DataSet */
