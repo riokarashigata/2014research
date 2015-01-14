@@ -43,13 +43,34 @@ public class DBBlock {
     }
        
     // Method
-    /* DB から目的のテーブルを取ってくる。 */
-    /* 個人単位のプロセスデータ */
-    private static ArrayList/*ResultSet*/ getTable(String FieldName, ArrayList[] Condition, String Block_ID)
+    /* DB からデータをとってくる。取ってきたデータを合わせる。 */
+    /* クラス単位（DataSet サイズ）のデータ */
+    private static ArrayList getTable(String FieldName, ArrayList[] Condition, String Block_ID)
     {
-        System.out.println("getTable");/* ●確認 */
-        ArrayList DataSet = new ArrayList();/* ●DataSet 後でちゃんとしたやつに変える*/
-        System.out.println("getTable2");/* ●確認 */
+        ArrayList ClassData = new ArrayList();/* ●DataSet 後でちゃんとしたやつに変える*/
+        
+        /* ●何人分のデータがいるのかを調べる */
+        
+        
+        /* ●ST_ID を設定する */
+        int ST_ID = 0;
+        
+        /* ●人数分だけループを回す */
+        /* その都度 ST_ID を更新する */
+        /* ●個人のデータを取ってくる */
+        double[] Personal = getProcessData(FieldName, Condition, Block_ID,ST_ID);
+     
+        return ClassData;
+    }
+    
+    // Method
+    /* DB からデータをとってくる。 */
+    /* 個人単位（ProcessData サイズ）のデータ */
+    public /* private */ static double[] getProcessData(String FieldName, ArrayList[] Condition, String Block_ID, int ST_ID)
+    {
+        /* ●DB からとってきた値を格納する。可変長にできればする。 */
+        double [] Data = new double[9];/* ● */
+            
         try
         {
             /* データベースへの接続 */
@@ -62,22 +83,19 @@ public class DBBlock {
             System.out.println(sql);/* ●確認用 */
             ResultSet Table = stmt.executeQuery(sql);
             
-            int STID = 0;
+            int STID = ST_ID;/* ● */
             int flg = 0;
-            
-            /* 結果の表示 */
-            /* 以下、クラスデータとして、個人ごとに記録（一番外のループ） */
-            
+                       
+            /* 特定の ST_ID のデータを取り出していく。 */
             while( Table.next())
             {
-                if(flg == 0)
+                if(flg == 0)/* 1 回だけ実行させる */
                 {
                     STID = Table.getInt("ST_ID");/* ST_ID の確認用 */
                     flg = 1;
                 }
                 /* "ST_ID"が同じ（＝同じ人のデータ）なら */
                 /* 個人データを記録していく */
-                double [] ProcessData = new double[9];/* ●ここをプロセスデータにする */
                 if(Table.getInt("ST_ID") == STID)
                 {
                     /* 課題ごとの値を得る */
@@ -89,18 +107,12 @@ public class DBBlock {
                             int DATA = Table.getInt(FieldName);/* 値を取ってくる */
                             if(DATA != 0)/* 値が 0 でなければ */
                             {
-                                ProcessData[i] = DATA;/* 値を格納する */
+                                Data[i] = DATA;/* 値を格納する */
                             }
                         }
                     }
                 }
-                                
-                /* ● DataSet に ProcessData を格納する。 */
-                DataSet.add(ProcessData);
-                STID = Table.getInt("ST_ID");/* "ST_ID"を更新する */
-                //●Table.previous();/* 1つ戻る（.next() の逆）*/
             }
-            
             /* 後片付け */
             Table.close();
             stmt.close();
@@ -110,23 +122,26 @@ public class DBBlock {
             e.printStackTrace();
         }
         
-        System.out.println(((double[])DataSet.get(0))[0]);/* ●確認用 */
-        
-        /* ●確認用 */
-        for(int i = 0; i < DataSet.size(); i++)
+        /* Data に格納されているデータのうち、空白でないデータの数を調べる。 */
+        int count = 0;
+        for(int i = 1; i <= 8 ; i++)
         {
-            double[] ProcessData = (double[])DataSet.get(i);
-            for(int j = 0; j < ProcessData.length; j++)
+            if(Data[i] != 0)
             {
-                System.out.println("ProcessData [" + i + "] = " + ProcessData[j]);
+                count++;
             }
         }
         
+        /* ●最終的な値を格納する */
+        double[] ProcessData = new double[count];
         
-        System.out.println("getTable before return");/* ●確認用 */
-       
-        //ResultSet Table = null;/* ●とりあえず null．後程修正。 */
-        return DataSet;
+        /* 余計な値を除いて格納する。 */
+        for(int i = 0; i < count; i++)
+        {
+            ProcessData[i] = Data[i];
+        }       
+
+        return ProcessData;
     }
     
     // Method
